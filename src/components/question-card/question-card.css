@@ -1,0 +1,7 @@
+.question {
+    color: white;
+}
+
+.not-event {
+    pointer-events: none;
+}
