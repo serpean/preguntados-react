@@ -1,3 +1,6 @@
+# Description
+1 Player question game to play with react
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
