@@ -7,8 +7,8 @@ const questionCard = props => {
   const correct = props.question.correct;
   return (
     <div className={answer ? "not-event" : ""}>
-      <div className='question'>{props.question.question}</div>
-      <ListGroup>
+      <p className='question'>{props.question.question}</p>
+      <ListGroup className="ListGroup">
         {props.question.answers.map((element, index) => {
           let key = ++index;
           let disabled = false;

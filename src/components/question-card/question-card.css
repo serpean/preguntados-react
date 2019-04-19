@@ -5,3 +5,7 @@
 .not-event {
     pointer-events: none;
 }
+
+.ListGroup {
+    color: black;
+}

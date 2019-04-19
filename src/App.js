@@ -1,112 +1,129 @@
 import React, { Component } from 'react';
+import Game from './components/game/game';
 import { Button } from 'reactstrap';
-import QuestionCard from './components/question-card/question-card';
 import './App.css';
-
-const list = [
-  {
-    question: 'Question 1',
-    answers: ['Answer 1', 'Answer 2', 'Answer 3', 'Answer 4'],
-    correct: 1
-  },
-  {
-    question: 'Question 2',
-    answers: ['Answer 1', 'Answer 2', 'Answer 3', 'Answer 4'],
-    correct: 2
-  },
-  {
-    question: 'Question 3',
-    answers: ['Answer 1', 'Answer 2', 'Answer 3', 'Answer 4'],
-    correct: 3
-  }
-];
 
 class App extends Component {
   state = {
     game: false,
-    i: 1,
+    list: [],
+    questionNumber: 1,
     context: {
       numCorrect: 0,
       numAnswered: 0
     },
     answered: null,
-    correct: false,
     question: {}
   };
 
   componentWillMount() {
+    const list = [
+      {
+        question: 'Question 1',
+        answers: ['Answer 1', 'Answer 2', 'Answer 3', 'Answer 4'],
+        correct: 1
+      },
+      {
+        question: 'Question 2',
+        answers: ['Answer 1', 'Answer 2', 'Answer 3', 'Answer 4'],
+        correct: 2
+      },
+      {
+        question: 'Question 3',
+        answers: ['Answer 1', 'Answer 2', 'Answer 3', 'Answer 4'],
+        correct: 3
+      }
+    ];
     this.setState({
+      list: list,
       game: true,
       answered: null,
-      correct: false,
       question: list[0]
     });
   }
 
-  nextQuestion = question => {
-    let actualI = this.state.i;
+  resetGame = () => {
+    const list = [
+      {
+        question: 'Question 1',
+        answers: ['Answer 1', 'Answer 2', 'Answer 3', 'Answer 4'],
+        correct: 1
+      },
+      {
+        question: 'Question 2',
+        answers: ['Answer 1', 'Answer 2', 'Answer 3', 'Answer 4'],
+        correct: 2
+      },
+      {
+        question: 'Question 3',
+        answers: ['Answer 1', 'Answer 2', 'Answer 3', 'Answer 4'],
+        correct: 3
+      }
+    ];
+    this.setState({
+      list: list,
+      questionNumber: 1,
+      context: {
+        numCorrect: 0,
+        numAnswered: 0
+      },
+      answered: null,
+      game: true,
+      question: list[0]
+    });
+  };
+
+  nextQuestion = () => {
+    let actualQuestionNumber = this.state.questionNumber;
     let gameStatus = true;
-    actualI++;
-    if (list.length < actualI) gameStatus = false;
+    const question = this.state.list[actualQuestionNumber];
+    actualQuestionNumber++;
+    if (this.state.list.length < actualQuestionNumber) gameStatus = false;
 
     this.setState({
       game: gameStatus,
-      i: actualI,
+      questionNumber: actualQuestionNumber,
       answered: null,
-      correct: false,
       question: question
     });
   };
 
   answerQuestion = id => {
-    let correct = false;
     let numAnswered = this.state.context.numAnswered;
     let numCorrect = this.state.context.numCorrect;
     if (id === this.state.question.correct) {
       numCorrect++;
-      correct = true;
     }
     const context = { numCorrect: numCorrect, numAnswered: ++numAnswered };
-    this.setState({ answered: id, correct: correct, context: context });
+    this.setState({ answered: id, context: context });
   };
 
   render() {
-    let actualAnswer = '';
-    if (this.state.answered) {
-      this.state.correct
-        ? (actualAnswer = <p className='white'>CORRECT</p>)
-        : (actualAnswer = <p className='white'>FAILD</p>);
-    }
-    let game = <p>END</p>;
+    let actualGame = (
+      <div>
+        <p>END</p>
+        <p>
+          <Button onClick={this.resetGame}>Reset</Button>
+        </p>
+      </div>
+    );
     if (this.state.game) {
-      game = (
-        <div>
-          <QuestionCard
-            question={this.state.question}
-            answer={this.state.answered}
-            answerQuestion={this.answerQuestion}
-          />
-          {this.state.answered ? (
-            <Button
-              onClick={() => {
-                this.nextQuestion(list[this.state.i]);
-              }}
-            >
-              Next
-            </Button>
-          ) : (
-            ''
-          )}
-          {actualAnswer}
-        </div>
+      actualGame = (
+        <Game
+          question={this.state.question}
+          answered={this.state.answered}
+          answerQuestion={this.answerQuestion}
+          nextQuestion={this.nextQuestion}
+        />
       );
     }
     return (
       <div className='App'>
         <main className='App-body'>
-          <p className='white'>Correctas: {this.state.context.numCorrect}</p>
-          <p className='white'>Contestadas: {this.state.context.numAnswered}</p>
-          {game}
+          <p>Correctas: {this.state.context.numCorrect}</p>
+          <p>Contestadas: {this.state.context.numAnswered}</p>
+          <p>Nº de preguntas: {this.state.list.length}</p>
+          {actualGame}
         </main>
       </div>
     );
