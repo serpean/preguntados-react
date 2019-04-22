@@ -6,6 +6,13 @@
     pointer-events: none;
 }
 
-.ListGroup {
+.listGroup {
     color: black;
+    width: 80%;
+    max-width: 500px;
+    margin: 10px auto;
+}
+
+.listItem {
+    width: 100%;
 }

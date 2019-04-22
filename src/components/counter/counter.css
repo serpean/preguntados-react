@@ -1,0 +1,15 @@
+.counterList {
+    padding: 0px;
+    display: flex;
+    width: 80%;
+    justify-content: center;
+    margin: 20px auto;
+}
+
+.counterItem {
+    list-style-type: none;
+    padding: 10px;
+    border: 1px solid white;
+    display: flex;
+    align-items: center;
+}

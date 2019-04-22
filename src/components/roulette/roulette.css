@@ -1,0 +1,16 @@
+.spin {
+    background-color: white;
+    color: #282c34
+}
+
+.spinWrapper {
+    padding: 20px;
+}
+
+#spinList {
+    padding: 0 20px;
+}
+
+.spinItem {
+    list-style-type: none;
+}
